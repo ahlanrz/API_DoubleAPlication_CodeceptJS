@@ -1,7 +1,25 @@
-Feature: Business rules
-  In order to achieve my goals
-  As a persona
-  I want to be able to interact with a system
+Feature: Double Aplication
 
-  Scenario: do something
-    Given I have a defined step
+  @test:test
+  Scenario: Testing for checking API Loans
+    Given I want to hit API loans
+    When I send post request loans
+    Then I get response data loans
+
+  @test:test
+  Scenario: Testing for checking API Loans
+    Given I want to hit API loans
+    When I send post request loans
+    Then I get response data loans
+
+  @test:test
+  Scenario: I want to testing for checking API Send Device Data
+    Given I want to hit API send device data
+    When I send post request send device data
+    Then I get response send device data
+
+  @test:test
+  Scenario: I want to testing for checking loan in CRM
+    Given I want to login CRM
+    When I search ref id
+    Then I get status data loan
