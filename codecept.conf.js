@@ -15,7 +15,10 @@ exports.config = {
       path: '/wd/hub',
       capabilities: {
         browserName: 'chrome',
-        platformName: 'linux'
+        platformName: 'linux',
+        chromeOptions: {
+          args: ['--disable-gpu', '--no-sandbox', '--disable-dev-shm-usage']
+        }
       },
       windowSize: 'maximize',
       timeout: {
@@ -55,7 +58,7 @@ exports.config = {
   keepBrowserState: true,
   hooks: [],
   gherkin: {
-    features: './features/double_aplication.feature',
+    features: './features/*.feature',
     steps: [
       './step_definitions/double_aplication.js',
     ]
@@ -89,7 +92,7 @@ exports.config = {
     }
   ],
   tests: './*_test.js',
-  name: 'OrangeHRMCodeceptJS',
+  name: 'DoubleAplications',
   bootstrap: false,
   mocha: {},
   retries: 0
