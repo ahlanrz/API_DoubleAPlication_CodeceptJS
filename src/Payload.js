@@ -2,7 +2,7 @@
         
           "addressInArea": "true",
           "income": {
-            "jobType": "PublicServant",
+            "jobType": "Entrepreneur",
             "taxId": "66663515436666",
             "employmentStatus": "Permanent",
             "employerName": "PT.BANK JASA JAKARTA",
@@ -30,8 +30,8 @@
             "dateOfBirth": "1991-10-23",
             "pin": "7102001212800000"
           },
-          "emailAddress": "qa.testing@amarbank.co.id",
-            "pin": "3178041702846844",
+          "emailAddress": "qa.retesting@amarbank.co.id",
+            "pin": "3178041123846765",
           "referralCode": "",
           "residencePosition": 1,
           "birthDayProvincePosition": 6,
