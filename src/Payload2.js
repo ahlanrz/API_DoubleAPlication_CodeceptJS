@@ -3006,11 +3006,11 @@
                 "model": "SM-A520F"
               },
               "calendarinfo": [
-                  {
-                      "title":"",
-                      "date":"1523232323232"
-                  }
-                  ],
+                {
+                  "title":"",
+                  "date":"1523232323232"
+                }
+                ],
               "contactsinfo": {
                 "total": 1000000
               },
@@ -45171,8 +45171,8 @@
                 "operator": "51089",
                 "carrier": "3",
                 "msisdn": ""
-              },
-            },
+              }
+            }
           };
 
 module.exports = {

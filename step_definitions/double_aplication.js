@@ -1,8 +1,8 @@
 const { I } = inject();
 const { expect} = require('chai');
 const { Payload } = require('../src/Payload');
-// const { testDataPayload2 } = require('../src/Payload2');
-// const { testPayload2 } = require('../src/payload2');
+const { testDataPayload2 } = require('../src/Payload2');
+//const { testPayload2 } = require('../src/payload2');
 
 let refId;
 let token;
@@ -88,7 +88,31 @@ Then('Then I verify response for duplicate loan request', async () => {
  });
  });
 
-// 4 CHECK LOAN IN CRM
+ // 4 SEND DEVICE DATA
+Given('I want to hit API send device data', async () => {
+    const endpoint = '/api/v1/my/device' ;
+    const headers = {
+        'Content-Type': 'application/json',
+        'X-Auth-Token': `${token}`,
+        'Authorization': 'Basic bW9iaWxlLWFwcDpzYTkyM25kczgyYng3bnY=',
+    };
+When('I send post request send device data', async () => {
+    // Await the testDataPayload to resolve
+    const resolvedPayload2 = await testDataPayload2;
+
+    const response = await I.sendPostRequest(endpoint, resolvedPayload2, headers);
+
+});
+
+Then('I get response send device data', async () => {
+
+    expect(response.status).to.be.within(200, 299);
+
+});
+});
+
+
+// 5 CHECK LOAN IN CRM
 Given('I want to login CRM', () => {
     I.amOnPage('https://crm-prelive.tunaiku.com/CRM/Login/index')
     I.fillField("//input[@placeholder='Username']", 'qa_testing+99');
@@ -103,20 +127,23 @@ When('I search cust id', () => {
     // I.click({xpath: "(//button[contains(@class,'btn btn-sm')]//i)[1]"});
     I.pressKey('Enter');
     I.wait(5);
-    I.executeScript(() => window.scrollTo(0, 500));
+    I.scrollTo("//button[normalize-space(text())='Loans']")
+    //I.executeScript(() => window.scrollTo(0, 600));
     I.see(`${refId}`);   
 });
 Then('I get status data loan', async () => {
-    
-    I.click({xpath: "//a[normalize-space(text())='Double application']"});
+    I.waitForElement("//a[normalize-space(text())='Double application']");
+    //I.wait(2);
+    I.click( "//a[normalize-space(text())='Double application']");
+    I.wait(2);
 // Mengambil nilai yang dipilih dari dropdown Application Status 
-    let selectedOption = await I.grabValueFrom({xpath:"//select[contains(.,'NewGoodAcceptedNormalRejectedBadPaid Back')]"}); // Pilih ID yang sesuai untuk dropdown
+    let selectedOption = await I.grabValueFrom("//select[contains(.,'NewGoodAcceptedNormalRejectedBadPaid Back')]"); // Pilih ID yang sesuai untuk dropdown
 // Menentukan data yang diharapkan
     const expectedValue = 'Rejected';  // Ganti dengan nilai yang diharapkan
 // Membandingkan nilai yang dipilih dengan nilai yang diharapkan
     expect(selectedOption).to.equal(expectedValue, 'Dropdown value should be "Rejected"');
 // Mengambil nilai yang dipilih dari dropdown Negative Decision Reason 
-let selectedOption_2 = await I.grabValueFrom({xpath:"//select[contains(.,'IncomeUnemployed/StudentEntrepreneurAgeDisposable incomeSecurity riskEmployer deficientScore cardCOVID RestructureLimitCustomer not reachedDocument not receivedDocument not validNo ID paymentDouble applicationOutside service areaBNPL LoansWrite OffExecutionEcommerce accountPaidout rate for long loansHTSS loansZero payerCo-Processing LoansSlik Auto RejectCapital ExposureDiscount customerOtherTimeoutInstallment Max Amount')]"}); // Pilih ID yang sesuai untuk dropdown
+let selectedOption_2 = await I.grabValueFrom("//select[contains(.,'IncomeUnemployed/StudentEntrepreneurAgeDisposable incomeSecurity riskEmployer deficientScore cardCOVID RestructureLimitCustomer not reachedDocument not receivedDocument not validNo ID paymentDouble applicationOutside service areaBNPL LoansWrite OffExecutionEcommerce accountPaidout rate for long loansHTSS loansZero payerCo-Processing LoansSlik Auto RejectCapital ExposureDiscount customerOtherTimeoutInstallment Max Amount')]"); // Pilih ID yang sesuai untuk dropdown
 // Menentukan data yang diharapkan
     const expectedValue_2 = '16';  // Ganti dengan nilai yang diharapkan
 // Membandingkan nilai yang dipilih dengan nilai yang diharapkan

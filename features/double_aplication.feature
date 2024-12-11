@@ -19,6 +19,12 @@ Feature: Double Aplication
     Then I get response send user profile
 
   @test:test
+  Scenario: I want to testing for checking API Send Device Data
+    Given I want to hit API send device data
+    When I send post request send device data
+    Then I get response send device data
+
+  @test:test
   Scenario: I want to testing for checking loan in CRM
     Given I want to login CRM
     When I search cust id
