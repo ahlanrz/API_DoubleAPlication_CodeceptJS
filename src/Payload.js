@@ -31,7 +31,7 @@
             "pin": "7102001212800000"
           },
           "emailAddress": "qa.retesting@amarbank.co.id",
-            "pin": "1432151312937811",
+            "pin": "1436541312953243",
           "referralCode": "",
           "residencePosition": 1,
           "birthDayProvincePosition": 6,

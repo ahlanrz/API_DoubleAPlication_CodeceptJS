@@ -148,5 +148,6 @@ let selectedOption_2 = await I.grabValueFrom("//select[contains(.,'IncomeUnemplo
     const expectedValue_2 = '16';  // Ganti dengan nilai yang diharapkan
 // Membandingkan nilai yang dipilih dengan nilai yang diharapkan
     expect(selectedOption_2).to.equal(expectedValue_2, 'Dropdown value should be "Double application"');
+    I.saveScreenshot('Double_application.png');
     
 });
