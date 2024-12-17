@@ -1,6 +1,6 @@
 const { I } = inject();
 const { expect} = require('chai');
-const { Payload } = require('../src/Payload');
+const { testPayload } = require('../src/Payload');
 const { testDataPayload2 } = require('../src/Payload2');
 //const { testPayload2 } = require('../src/payload2');
 
@@ -8,6 +8,8 @@ let refId;
 let token;
 let custId;
 let response;
+let pin; // Variabel untuk menyimpan pin dari step pertama
+
 
 //1 CREATE LOAN 
 Given('I want to hit API loans', async () => {
@@ -16,24 +18,45 @@ Given('I want to hit API loans', async () => {
         'Content-Type': 'application/json',
         'Authorization': 'Basic bW9iaWxlLWFwcDpzYTkyM25kczgyYng3bnY=',
         'Accept': 'application/json',   
+    };
     
-};
 When('I send post request loans', async () => {
-    // Await the testDataPayload to resolve
-    const resolvedPayload = await Payload;
+     // Generate payload
+     const resolvedPayload = await testPayload();
 
-    response = await I.sendPostRequest(endpoint, resolvedPayload, headers);
+     // Log untuk memastikan payload benar
+     console.log('Payload for first request:', resolvedPayload);
+
+     // Simpan pin yang dihasilkan ke variabel global
+     pin = resolvedPayload.pin;
+
+     response = await I.sendPostRequest(endpoint, resolvedPayload, headers);
+
+     // Simpan data respons
+     refId = response.data.id;
+     token = response.data.token;
+ });
+//     // Await the testDataPayload to resolve
+//     const resolvedPayload = await testPayload;
+
+//     response = await I.sendPostRequest(endpoint, resolvedPayload, headers);
     
-    refId = response.data.id;
-    token = response.data.token;
-}); 
+//     refId = response.data.id;
+//     token = response.data.token;
+// }); 
 
 Then('I get response data loans', async () => {
-    console.log(refId);
-    console.log(token);
+    console.log('Ref ID:', refId);
+    console.log('Token:', token);
+    console.log('Pin:', pin); // Pastikan pin terlihat di log
     expect(response.status).to.be.within(200, 299);
 });
 });
+//     console.log(refId);
+//     console.log(token);
+//     expect(response.status).to.be.within(200, 299);
+// });
+// });
 
 
 //2 CREATE LOAN WITH SAME ID
@@ -47,21 +70,42 @@ Given('I want to hit API loans with same ID', async () => {
 };
 
 When('I send post request loans with same ID', async () => {
-    // Await the testDataPayload to resolve
-    const resolvedPayload = await Payload;
+    // Generate payload dengan pin yang sama
+    const resolvedPayload = await testPayload();
+
+    // Ubah pin menjadi pin dari step pertama
+    resolvedPayload.pin = pin;
+
+    // Log untuk memastikan pin sama
+    console.log('Payload for duplicate request:', resolvedPayload);
 
     response = await I.sendPostRequest(endpoint, resolvedPayload, headers);
-    
+
+    // Simpan data respons
     refId = response.data.id;
     token = response.data.token;
-}); 
+});
+//     // Await the testDataPayload to resolve
+//     const resolvedPayload = await Payload;
+
+//     response = await I.sendPostRequest(endpoint, resolvedPayload, headers);
+    
+//     refId = response.data.id;
+//     token = response.data.token;
+// }); 
 
 Then('Then I verify response for duplicate loan request', async () => {
-    console.log(refId);
-    console.log(token);
-    expect(response.status).to.be.within(200, 299);
+    console.log('Ref ID:', refId);
+        console.log('Token:', token);
+        console.log('Pin:', pin); // Pastikan pin sama dengan step pertama
+        expect(response.status).to.be.within(200, 299);
+    });
 });
-});
+//     console.log(refId);
+//     console.log(token);
+//     expect(response.status).to.be.within(200, 299);
+// });
+// });
 
 // 3 Get User Profile
  Given('I want to hit API get user profle', async () => {
