@@ -29,12 +29,11 @@ When('I send post request loans', async () => {
      // Simpan pin yang dihasilkan ke variabel global
      pin = resolvedPayload.pin;
 
-     response = await I.sendPostRequest(endpoint, resolvedPayload, headers);
-
-     // Simpan data respons
-     refId = response.data.id;
-     token = response.data.token;
- });
+    response = await I.sendPostRequest(endpoint, resolvedPayload, headers);
+    
+    refId = response.data.id;
+    token = response.data.token;
+}); 
 
 Then('I get response data loans', async () => {
     console.log('Ref ID:', refId);
@@ -43,6 +42,7 @@ Then('I get response data loans', async () => {
     expect(response.status).to.be.within(200, 299);
 });
 });
+
 
 //2 CREATE LOAN WITH SAME ID
 Given('I want to hit API loans with same ID', async () => {
@@ -69,7 +69,7 @@ When('I send post request loans with same ID', async () => {
     // Simpan data respons
     refId = response.data.id;
     token = response.data.token;
-});
+}); 
 
 Then('Then I verify response for duplicate loan request', async () => {
     console.log('Ref ID:', refId);
@@ -78,6 +78,11 @@ Then('Then I verify response for duplicate loan request', async () => {
         expect(response.status).to.be.within(200, 299);
     });
 });
+//     console.log(refId);
+//     console.log(token);
+//     expect(response.status).to.be.within(200, 299);
+// });
+// });
 
 // 3 Get User Profile
  Given('I want to hit API get user profle', async () => {
